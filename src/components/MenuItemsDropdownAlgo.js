@@ -1,0 +1,22 @@
+export const MenuItems = [
+  {
+    title: 'Depth-first Search',
+    cName: 'dropdown-link',
+  },
+  {
+    title: 'Breadth-first Search',
+    cName: 'dropdown-link',
+  },
+  {
+    title: 'Greedy Best-first Search',
+    cName: 'dropdown-link',
+  },
+  {
+    title: "Dijkstra's Algorithm",
+    cName: 'dropdown-link',
+  },
+  {
+    title: 'A* Search',
+    cName: 'dropdown-link',
+  },
+];
