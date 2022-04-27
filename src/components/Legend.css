@@ -16,7 +16,62 @@
 }
 
 .legend-note {
-  color: black;
+  color: rgb(0, 0, 0);
   text-decoration: none;
   padding: 0.3rem 0.3rem;
+}
+
+.node-start {
+  width: 25px;
+  height: 25px;
+  outline: 0.5px solid rgb(44, 154, 238);
+  background-color: rgb(10, 190, 10);
+  display: inline-block;
+}
+
+.node-target {
+  width: 25px;
+  height: 25px;
+  outline: 0.5px solid rgb(44, 154, 238);
+  background-color: rgb(245, 32, 25);
+  display: inline-block;
+}
+
+.node-wall {
+  width: 25px;
+  height: 25px;
+  outline: 0.5px solid rgb(44, 154, 238);
+  background-color: rgb(12, 53, 71);
+  display: inline-block;
+}
+
+.node-weight {
+  width: 25px;
+  height: 25px;
+  outline: 0.5px solid rgb(44, 154, 238);
+  background-color: rgb(66, 62, 255);
+  display: inline-block;
+}
+
+.node-unvisited {
+  width: 25px;
+  height: 25px;
+  outline: 0.5px solid rgb(44, 154, 238);
+  display: inline-block;
+}
+
+.node-visit {
+  width: 25px;
+  height: 25px;
+  outline: 0.5px solid rgb(44, 154, 238);
+  background-color: rgb(183, 109, 232);
+  display: inline-block;
+}
+
+.node-path {
+  width: 25px;
+  height: 25px;
+  outline: 0.5px solid rgb(44, 154, 238);
+  background-color: rgb(37, 215, 255);
+  display: inline-block;
 }

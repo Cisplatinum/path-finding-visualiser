@@ -1,4 +1,4 @@
-export const MenuItems = [
+export const MenuItemsAlgo = [
   {
     title: 'Depth-first Search',
     cName: 'dropdown-link',

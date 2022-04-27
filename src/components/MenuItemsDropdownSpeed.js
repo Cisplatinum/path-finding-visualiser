@@ -1,4 +1,4 @@
-export const MenuItems = [
+export const MenuItemsSpeed = [
   {
     title: 'Fast',
     cName: 'dropdown-link',

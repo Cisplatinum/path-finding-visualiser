@@ -45,6 +45,7 @@
   color: white;
   text-decoration: none;
   padding: 0.5rem 1rem;
+  cursor: pointer;
 }
 
 .nav-links:hover {
