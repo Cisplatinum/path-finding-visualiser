@@ -80,7 +80,3 @@ function getAllNodes(grid) {
   }
   return nodes;
 }
-
-export function delay(time) {
-  return new Promise(resolve => setTimeout(resolve, time));
-}

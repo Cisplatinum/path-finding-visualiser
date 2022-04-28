@@ -10,7 +10,7 @@ export function astarSearch(grid, startNode, finishNode) {
   const unvisitedNodes = getAllNodes(grid);
   while (unvisitedNodes.length !== 0) {
     sortNodesByDistance(unvisitedNodes);
-    console.log('unvisitedNodes', unvisitedNodes);
+    // console.log('unvisitedNodes', unvisitedNodes);
     const closestNode = unvisitedNodes.shift();
     // skip when we hit a wall
     if (closestNode.isWall) continue;
@@ -60,4 +60,8 @@ function getAllNodes(grid) {
     }
   }
   return nodes;
+}
+
+export function delay(time) {
+  return new Promise(resolve => setTimeout(resolve, time));
 }
