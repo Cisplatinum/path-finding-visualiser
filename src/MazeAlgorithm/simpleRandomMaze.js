@@ -5,7 +5,7 @@ function getRandom(max) {
 export default function randomMazeGenerator(grid, rows, cols) {
   grid.forEach(row => {
     row.forEach((_, pos) => {
-      if (Math.random() < 0.3) {
+      if (Math.random() < 0.25) {
         row[pos].isWall = true;
       }
     });

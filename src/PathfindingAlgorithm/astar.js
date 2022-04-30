@@ -25,7 +25,10 @@ export function astarSearch(grid, startNode, finishNode) {
 }
 
 function sortNodesByDistance(unvisitedNodes) {
-  unvisitedNodes.sort((nodeA, nodeB) => nodeA.distance - nodeB.distance);
+  unvisitedNodes.sort(
+    (nodeA, nodeB) =>
+      nodeA.distance + nodeA.distancel1 - (nodeB.distance + nodeB.distancel1),
+  );
 }
 
 function updateUnvisitedNeighbors(node, grid, finishNode) {
@@ -37,7 +40,7 @@ function updateUnvisitedNeighbors(node, grid, finishNode) {
     } else {
       neighbor.distance = node.distance + 1;
     }
-    neighbor.distance += manhattanDis;
+    neighbor.distancel1 = manhattanDis;
     neighbor.previousNode = node;
   }
 }

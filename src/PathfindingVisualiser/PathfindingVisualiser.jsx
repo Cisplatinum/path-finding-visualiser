@@ -3,6 +3,7 @@ import Node from './Node/Node';
 import {dijkstra} from '../PathfindingAlgorithm/dijkstra';
 import {bfs} from '../PathfindingAlgorithm/bfs';
 import {dfs} from '../PathfindingAlgorithm/dfs';
+// import {depthLimitedSearch} from '../PathfindingAlgorithm/iterativeDeepeningDFS'
 import Navbar from '../components/Navbar/Navbar';
 import Legend from '../components/Legend'
 import randomMazeGenerator from '../MazeAlgorithm/simpleRandomMaze'
@@ -13,7 +14,7 @@ import './PathfindingVisualiser.css';
 import { greedySearch } from '../PathfindingAlgorithm/greedy';
 import {astarSearch} from '../PathfindingAlgorithm/astar';
 
-const rowsNum = 23;
+const rowsNum = 22;
 const colsNum = 60;
 
 let START_NODE_ROW = -1;
@@ -104,6 +105,12 @@ export default class PathfindingVisualizer extends Component {
     for (let row = 0; row < rowsNum; row++) {
       for (let col = 0; col < colsNum; col++) {
         const node = this.state.grid[row][col];
+        node.distance = Infinity;
+        node.distancel1 = 0;
+        node.isVisited = false;
+        node.isStart = false;
+        node.isFinish = false;
+        node.previousNode = null;
         document.getElementById(`node-${node.row}-${node.col}`).className =
           'node';
       }
@@ -115,22 +122,34 @@ export default class PathfindingVisualizer extends Component {
     for (let row = 0; row < rowsNum; row++) {
       for (let col = 0; col < colsNum; col++) {
         const node = this.state.grid[row][col];
-        if (node.isWall) continue;
+        node.distance = Infinity;
+        node.distancel1 = 0;
+        node.isVisited = false;
+        node.isStart = false;
+        node.isFinish = false;
+        node.previousNode = null;
+        if (node.isWall) {
+          document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-wall';
+          continue;
+        };
         if (node.isWeighted) {
           document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-weighted';
           continue;
         }
         if (row === START_NODE_ROW && col === START_NODE_COL) {
+          node.isStart = true;
           document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-start';
           continue;
         }
         if (row === FINISH_NODE_ROW && col === FINISH_NODE_COL) {
+          node.isFinish = true;
           document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-finish';
           continue}
         document.getElementById(`node-${node.row}-${node.col}`).className =
           'node';
       }
     }
+    // console.log(this.state.grid);
   }
 
   setSpeed(speed) {
@@ -140,7 +159,7 @@ export default class PathfindingVisualizer extends Component {
         timeoutPara = 10;
         break;
       case 'Average':
-        timeoutPara = 25;
+        timeoutPara = 30;
         break;
       case 'Slow':
         timeoutPara = 50;
@@ -176,14 +195,20 @@ export default class PathfindingVisualizer extends Component {
   }
 
   animateVisited(visitedNodesInOrder) {
+    // console.log(visitedNodesInOrder);
     for (let i = 0; i < visitedNodesInOrder.length; i++) {
       setTimeout(() => {
         const node = visitedNodesInOrder[i];
         if (node.isWeighted) {
           document.getElementById(`node-${node.row}-${node.col}`).className =
           'node node-weighted-visited';
-        }
-        else document.getElementById(`node-${node.row}-${node.col}`).className =
+        } else if (node.isStart) {
+          document.getElementById(`node-${node.row}-${node.col}`).className =
+          'node node-start';
+        } else if (node.isFinish) {
+          document.getElementById(`node-${node.row}-${node.col}`).className =
+          'node node-finish';
+        } else document.getElementById(`node-${node.row}-${node.col}`).className =
           'node node-visited';
       }, timeoutPara * i);
     }
@@ -196,8 +221,13 @@ export default class PathfindingVisualizer extends Component {
         if (node.isWeighted) {
           document.getElementById(`node-${node.row}-${node.col}`).className =
           'node node-weighted-path';
-        }
-        else document.getElementById(`node-${node.row}-${node.col}`).className =
+        } else if (node.isStart) {
+          document.getElementById(`node-${node.row}-${node.col}`).className =
+          'node node-start';
+        } else if (node.isFinish) {
+          document.getElementById(`node-${node.row}-${node.col}`).className =
+          'node node-finish';
+        } else document.getElementById(`node-${node.row}-${node.col}`).className =
           'node node-shortest-path';
       }, 50 * i);
     }
@@ -222,7 +252,7 @@ export default class PathfindingVisualizer extends Component {
     }
     const {grid} = this.state;
     if (START_NODE_ROW === -1 || START_NODE_COL === -1 || FINISH_NODE_ROW === -1 || FINISH_NODE_COL === -1) {
-      alert("Please select a start node and target node!");
+      alert("Please select a maze!");
       return;
     }
     const startNode = grid[START_NODE_ROW][START_NODE_COL];
@@ -237,6 +267,21 @@ export default class PathfindingVisualizer extends Component {
         visitedNodesInOrder = await bfs(grid, startNode, finishNode);
         // console.log(visitedNodesInOrder);
         break;
+      // case 'Iterative Deepening Depth-first Search':
+      //   let findFinish = false;
+      //   for (let l = 1; l < 100; l++) {
+      //     const res = await depthLimitedSearch(grid, startNode, finishNode, l, findFinish);
+      //     console.log(res);
+      //     if (findFinish) {
+      //       const path = await this.getNodesInShortestPathOrder(finishNode);
+      //       await this.animate(res, path);
+      //       break;
+      //     } else {
+      //       await this.animate(res, []);
+      //     }
+      //     this.clearPath();
+      //   }
+      //   break;
       case 'Greedy Best-first Search':
         visitedNodesInOrder = await greedySearch(grid, startNode, finishNode);
         // console.log(visitedNodesInOrder);
@@ -267,8 +312,8 @@ export default class PathfindingVisualizer extends Component {
           <Navbar startViz={this.visualize} setAlgo={this.setAlgo} setMaze={this.setMaze} setSpeed={this.setSpeed} resetGrid={this.resetGrid} clearPath={this.clearPath}/>
           <Legend />
         </div>
-        <div className="App">
-          Visualizing {this.state.algo}!
+        <div className="note">
+          {this.state.algo === null ? <h2>Please select an algorithm and a maze to start</h2> : <h2>Visualizing {this.state.algo}, Speed: {this.state.speed}</h2>} 
         </div>
         <div className="grid">
           {grid.map((row, rowIdx) => {
@@ -280,6 +325,7 @@ export default class PathfindingVisualizer extends Component {
                     <Node
                       key={nodeIdx}
                       col={col}
+                      row={row}
                       isFinish={isFinish}
                       isStart={isStart}
                       isWall={isWall}
@@ -289,8 +335,7 @@ export default class PathfindingVisualizer extends Component {
                       onMouseEnter={(row, col) =>
                         this.handleMouseEnter(row, col)
                       }
-                      onMouseUp={() => this.handleMouseUp()}
-                      row={row}></Node>
+                      onMouseUp={() => this.handleMouseUp()}></Node>
                   );
                 })}
               </div>
@@ -323,6 +368,7 @@ const createNode = (col, row) => {
     isStart: row === START_NODE_ROW && col === START_NODE_COL,
     isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
     distance: Infinity,
+    distancel1: 0,
     isVisited: false,
     isWall: false,
     isWeighted: false,
@@ -364,6 +410,6 @@ function generateStartAndFinishNode(grid) {
   return [entry, exit];
 }
 
-function delay(time) {
-  return new Promise(resolve => setTimeout(resolve, time));
-}
+// function delay(time) {
+//   return new Promise(resolve => setTimeout(resolve, time));
+// }

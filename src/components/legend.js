@@ -19,19 +19,20 @@ class Legend extends Component {
         </li>
         <li className="legend-item">
           <div className="node-weight" />{' '}
+          <div className="node-weight-visited" />{' '}
           <div className="legend-note">Weighted Node</div>
-        </li>
-        <li className="legend-item">
-          <div className="node-unvisited" />{' '}
-          <div className="legend-note">Unvisited Node</div>
         </li>
         <li className="legend-item">
           <div className="node-visit" />{' '}
           <div className="legend-note">Visited Node</div>
         </li>
         <li className="legend-item">
-          <div className="node-path" />{' '}
+          <div className="node-path" /> <div className="node-path-weighted" />{' '}
           <div className="legend-note">Shortest-path Node</div>
+        </li>
+        <li className="legend-item">
+          <div className="node-unvisited" />{' '}
+          <div className="legend-note">Unvisited Node</div>
         </li>
       </ul>
     );

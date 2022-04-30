@@ -13,6 +13,7 @@
   display: flex;
   align-items: center;
   height: 20px;
+  padding: 0.5rem;
 }
 
 .legend-note {
@@ -53,6 +54,14 @@
   display: inline-block;
 }
 
+.node-weight-visited {
+  width: 25px;
+  height: 25px;
+  outline: 0.5px solid rgb(44, 154, 238);
+  background-color: rgb(226, 129, 65);
+  display: inline-block;
+}
+
 .node-unvisited {
   width: 25px;
   height: 25px;
@@ -73,5 +82,13 @@
   height: 25px;
   outline: 0.5px solid rgb(44, 154, 238);
   background-color: rgb(37, 215, 255);
+  display: inline-block;
+}
+
+.node-path-weighted {
+  width: 25px;
+  height: 25px;
+  outline: 0.5px solid rgb(44, 154, 238);
+  background-color: rgb(52, 127, 238);
   display: inline-block;
 }

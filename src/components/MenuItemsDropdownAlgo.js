@@ -7,6 +7,10 @@ export const MenuItemsAlgo = [
     title: 'Breadth-first Search',
     cName: 'dropdown-link',
   },
+  // {
+  //   title: 'Iterative Deepening Depth-first Search',
+  //   cName: 'dropdown-link',
+  // },
   {
     title: 'Greedy Best-first Search',
     cName: 'dropdown-link',
