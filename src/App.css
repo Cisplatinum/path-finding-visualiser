@@ -10,3 +10,13 @@
   padding: 0.5rem 0rem;
   color: rgb(12, 53, 71);
 }
+
+a {
+  color: rgb(12, 53, 71);
+  font-style: italic;
+}
+
+a:hover,
+a:focus{
+  color:rgba(73, 63, 252, 1);
+}

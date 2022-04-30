@@ -7,7 +7,16 @@ import {MenuItemsMaze} from '../MenuItemsDropdownMaze';
 import {MenuItemsSpeed} from '../MenuItemsDropdownSpeed';
 import '../Dropdown.css';
 
-function Navbar({startViz, setAlgo, setMaze, setSpeed, resetGrid, clearPath}) {
+function Navbar({
+  startViz,
+  setAlgo,
+  setMaze,
+  setSpeed,
+  resetGrid,
+  clearPath,
+  getSpeed,
+  getAlgo,
+}) {
   const [click, setClick] = useState(false);
   const [dropdownAlgo, setDropdownAlgo] = useState(false);
   const [dropdownMaze, setDropdownMaze] = useState(false);
@@ -89,7 +98,7 @@ function Navbar({startViz, setAlgo, setMaze, setSpeed, resetGrid, clearPath}) {
 
         <li className="nav-item">
           <div className="nav-links" onClick={handleDropdownSpeed}>
-            Speed <i className="fas fa-caret-down" />
+            Speed: {getSpeed()} <i className="fas fa-caret-down" />
           </div>
           {dropdownSpeed && <DropdownSpeed setSpeed={setSpeed} />}
         </li>
@@ -104,7 +113,7 @@ function Navbar({startViz, setAlgo, setMaze, setSpeed, resetGrid, clearPath}) {
           );
         })} */}
       </ul>
-      <Button onClick={() => startViz()}>Visualize</Button>
+      <Button onClick={() => startViz()}>Visualize {getAlgo()}</Button>
     </nav>
   );
 }

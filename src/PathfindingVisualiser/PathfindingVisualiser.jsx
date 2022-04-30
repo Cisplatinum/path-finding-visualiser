@@ -6,6 +6,7 @@ import {dfs} from '../PathfindingAlgorithm/dfs';
 // import {depthLimitedSearch} from '../PathfindingAlgorithm/iterativeDeepeningDFS'
 import Navbar from '../components/Navbar/Navbar';
 import Legend from '../components/Legend'
+import Footer from '../components/Footer'
 import randomMazeGenerator from '../MazeAlgorithm/simpleRandomMaze'
 import weightedMazeGenerator from '../MazeAlgorithm/randomWeighteMaze'
 import recursiveDivisionMaze from '../MazeAlgorithm/recursiveMaze'
@@ -40,6 +41,8 @@ export default class PathfindingVisualizer extends Component {
     this.visualize = this.visualize.bind(this);
     this.resetGrid = this.resetGrid.bind(this);
     this.clearPath = this.clearPath.bind(this);
+    this.getSpeed = this.getSpeed.bind(this);
+    this.getAlgo = this.getAlgo.bind(this);
   }
 
   componentDidMount() {
@@ -320,17 +323,48 @@ export default class PathfindingVisualizer extends Component {
     this.animate(visitedNodesInOrder, nodesInShortestPathOrder);
   }
 
+  getSpeed() {
+    return this.state.speed;
+  }
+
+  getAlgo() {
+    return this.state.algo;
+  }
+
   render() {
     const {grid, mouseIsPressed} = this.state;
 
     return (
       <>
         <div className="App">
-          <Navbar startViz={this.visualize} setAlgo={this.setAlgo} setMaze={this.setMaze} setSpeed={this.setSpeed} resetGrid={this.resetGrid} clearPath={this.clearPath}/>
+          <Navbar startViz={this.visualize} setAlgo={this.setAlgo} setMaze={this.setMaze} setSpeed={this.setSpeed} resetGrid={this.resetGrid} clearPath={this.clearPath} getSpeed={this.getSpeed} getAlgo={this.getAlgo}/>
           <Legend />
         </div>
         <div className="note">
-          {this.state.algo === null ? <h2>Please select an algorithm and a maze to start</h2> : <h2>Visualizing {this.state.algo}, Speed: {this.state.speed}</h2>} 
+          {this.state.algo === null 
+          ? <h2>Please select an algorithm and a maze to start</h2>
+          : this.state.algo === 'Depth-first Search'
+          ? <>
+              <h2><a href="https://www.geeksforgeeks.org/depth-first-search-or-dfs-for-a-graph/">Depth-first Search</a> is NOT weighted, NOT complete and NOT optimal</h2>
+            </>
+          : this.state.algo === 'Breadth-first Search'
+          ? <>
+              <h2><a href="https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/">Breadth-first Search</a> is NOT weighted, complete and optimal</h2>
+            </>
+          : this.state.algo === 'Greedy Best-first Search'
+          ? <>
+              <h2><a href="https://www.geeksforgeeks.org/greedy-algorithms/">Greedy Best-first Search</a> is weighted, NOT complete and NOT optimal</h2>
+            </>
+          : this.state.algo === 'Dijkstra\'s Algorithm'
+          ? <>
+              <h2><a href="https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/">Dijkstra's Algorithm</a> is weighted, complete and optimal</h2>
+            </>
+          : this.state.algo === 'A* Search'
+          ? <>
+              <h2><a href="https://www.geeksforgeeks.org/a-search-algorithm/">A* Search</a> is weighted, complete and optimal</h2>
+            </>
+          : ''
+        }
         </div>
         <div className="grid">
           {grid.map((row, rowIdx) => {
@@ -358,6 +392,9 @@ export default class PathfindingVisualizer extends Component {
               </div>
             );
           })}
+        </div>
+        <div>
+          <Footer></Footer>
         </div>
       </>
     );
