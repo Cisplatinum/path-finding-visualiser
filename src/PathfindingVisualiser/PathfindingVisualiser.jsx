@@ -45,6 +45,10 @@ export default class PathfindingVisualizer extends Component {
   componentDidMount() {
     const grid = getInitialGrid();
     this.setState({grid});
+    // [START_NODE_ROW, START_NODE_COL] = [rowsNum/2, colsNum/4];
+    // [FINISH_NODE_ROW, FINISH_NODE_COL] = [rowsNum/2, colsNum/4*3];
+    // grid[START_NODE_ROW][START_NODE_COL].isStart = true;
+    // grid[FINISH_NODE_ROW][FINISH_NODE_COL].isFinish = true;
   }
 
   setAlgo(algo) {
@@ -90,6 +94,15 @@ export default class PathfindingVisualizer extends Component {
         [FINISH_NODE_ROW, FINISH_NODE_COL] = [exit.x, exit.y];
       }
         break;
+      case 'Random Start & Finish Nodes':
+      {
+        let entry, exit;
+        [entry, exit] = generateStartAndFinishNode(this.state.grid);
+        [START_NODE_ROW, START_NODE_COL] = [entry.x, entry.y];
+        [FINISH_NODE_ROW, FINISH_NODE_COL] = [exit.x, exit.y];
+        this.setState({grid: this.state.grid});
+      }
+        break;
       default:
         break;
       }
@@ -106,7 +119,7 @@ export default class PathfindingVisualizer extends Component {
       for (let col = 0; col < colsNum; col++) {
         const node = this.state.grid[row][col];
         node.distance = Infinity;
-        node.distancel1 = 0;
+        node.distancel1 = Infinity;
         node.isVisited = false;
         node.isStart = false;
         node.isFinish = false;
@@ -115,6 +128,10 @@ export default class PathfindingVisualizer extends Component {
           'node';
       }
     }
+    // this.state.grid[START_NODE_ROW][START_NODE_COL].isStart = true;
+    // this.state.grid[FINISH_NODE_ROW][FINISH_NODE_COL].isFinish = true;
+    // document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
+    // document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
     // console.log('reset finished!');
   }
 
@@ -123,7 +140,7 @@ export default class PathfindingVisualizer extends Component {
       for (let col = 0; col < colsNum; col++) {
         const node = this.state.grid[row][col];
         node.distance = Infinity;
-        node.distancel1 = 0;
+        node.distancel1 = Infinity;
         node.isVisited = false;
         node.isStart = false;
         node.isFinish = false;
@@ -368,7 +385,7 @@ const createNode = (col, row) => {
     isStart: row === START_NODE_ROW && col === START_NODE_COL,
     isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
     distance: Infinity,
-    distancel1: 0,
+    distancel1: Infinity,
     isVisited: false,
     isWall: false,
     isWeighted: false,

@@ -11,4 +11,8 @@ export const MenuItemsMaze = [
     title: 'Random Weighted Maze',
     cName: 'dropdown-link',
   },
+  {
+    title: 'Random Start & Finish Nodes',
+    cName: 'dropdown-link',
+  },
 ];

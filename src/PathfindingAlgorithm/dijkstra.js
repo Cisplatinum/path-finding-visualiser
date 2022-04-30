@@ -24,11 +24,18 @@ function updateUnvisitedNeighbors(node, grid) {
   const unvisitedNeighbors = getUnvisitedNeighbors(node, grid);
   for (const neighbor of unvisitedNeighbors) {
     if (neighbor.isWeighted) {
-      neighbor.distance = node.distance + 5;
+      const temp = node.distance + 5;
+      if (temp < neighbor.distance) {
+        neighbor.distance = temp;
+        neighbor.previousNode = node;
+      }
     } else {
-      neighbor.distance = node.distance + 1;
+      const temp = node.distance + 1;
+      if (temp < neighbor.distance) {
+        neighbor.distance = temp;
+        neighbor.previousNode = node;
+      }
     }
-    neighbor.previousNode = node;
   }
 }
 

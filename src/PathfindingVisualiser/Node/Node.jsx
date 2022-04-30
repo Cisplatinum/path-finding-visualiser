@@ -6,6 +6,7 @@ export default class Node extends Component {
   render() {
     const {
       col,
+      row,
       isFinish,
       isStart,
       isWall,
@@ -13,7 +14,6 @@ export default class Node extends Component {
       onMouseDown,
       onMouseEnter,
       onMouseUp,
-      row,
     } = this.props;
     const extraClassName = isFinish
       ? 'node-finish'

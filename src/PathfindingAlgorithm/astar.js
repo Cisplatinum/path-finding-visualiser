@@ -7,6 +7,7 @@ function manhattanDistance(nodeOne, nodeTwo) {
 export function astarSearch(grid, startNode, finishNode) {
   const visitedNodesInOrder = [];
   startNode.distance = 0;
+  startNode.distancel1 = manhattanDistance(startNode, finishNode);
   const unvisitedNodes = getAllNodes(grid);
   while (unvisitedNodes.length !== 0) {
     sortNodesByDistance(unvisitedNodes);
@@ -25,10 +26,13 @@ export function astarSearch(grid, startNode, finishNode) {
 }
 
 function sortNodesByDistance(unvisitedNodes) {
-  unvisitedNodes.sort(
-    (nodeA, nodeB) =>
-      nodeA.distance + nodeA.distancel1 - (nodeB.distance + nodeB.distancel1),
-  );
+  unvisitedNodes.sort((nodeA, nodeB) => {
+    if (nodeA.distance + nodeA.distancel1 === nodeB.distance + nodeB.distancel1)
+      return nodeA.distancel1 - nodeB.distancel1;
+    return (
+      nodeA.distance + nodeA.distancel1 - (nodeB.distance + nodeB.distancel1)
+    );
+  });
 }
 
 function updateUnvisitedNeighbors(node, grid, finishNode) {
@@ -36,12 +40,20 @@ function updateUnvisitedNeighbors(node, grid, finishNode) {
   for (const neighbor of unvisitedNeighbors) {
     let manhattanDis = manhattanDistance(neighbor, finishNode);
     if (neighbor.isWeighted) {
-      neighbor.distance = node.distance + 5;
+      const temp = node.distance + 5;
+      if (temp < neighbor.distance) {
+        neighbor.distance = temp;
+        neighbor.distancel1 = manhattanDis;
+        neighbor.previousNode = node;
+      }
     } else {
-      neighbor.distance = node.distance + 1;
+      const temp = node.distance + 1;
+      if (temp < neighbor.distance) {
+        neighbor.distance = temp;
+        neighbor.distancel1 = manhattanDis;
+        neighbor.previousNode = node;
+      }
     }
-    neighbor.distancel1 = manhattanDis;
-    neighbor.previousNode = node;
   }
 }
 
