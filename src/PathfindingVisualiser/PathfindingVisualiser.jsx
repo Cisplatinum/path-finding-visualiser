@@ -264,7 +264,7 @@ export default class PathfindingVisualizer extends Component {
   }
 
   async visualize() {
-    console.log(this.state);
+    // console.log(this.state);
     // no algorithm is chosen
     if (this.state.algo === null) {
       alert("Please select a algorithm to visualize!")
@@ -277,6 +277,7 @@ export default class PathfindingVisualizer extends Component {
     }
     const startNode = grid[START_NODE_ROW][START_NODE_COL];
     const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+    await this.clearPath();
     let visitedNodesInOrder;
     switch(this.state.algo) {
       case 'Depth-first Search':
